@@ -35,9 +35,26 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument("--input_file", default=None, type=str)
-    parser.add_argument("--output_file", default=None, type=str)
-    parser.add_argument("-o", "--override", action="store_true")
+    parser = ArgumentParser(description="Prepare the data for the experiment")
+    parser.add_argument(
+        "--input_file",
+        default=None,
+        type=str,
+        required=True,
+        help="The input file containing the raw articles",
+    )
+    parser.add_argument(
+        "--output_file",
+        default=None,
+        type=str,
+        required=True,
+        help="The output file to store the prepared data",
+    )
+    parser.add_argument(
+        "-o",
+        "--override",
+        action="store_true",
+        help="Override the output file if it already exists (default: False)",
+    )
     args = parser.parse_args()
     main(args)

@@ -87,19 +87,20 @@ python scripts/01_prepare_data.py \
 python scripts/02_article_clustering.py \
     --input_file ./data/processed/dataset.test.csv \
     --output_file ./data/processed/mono/dataset.test.csv \
-    --rank_th 0.5 \ # threshold for deciding if an article should be added to the cluster (optional)
-    --time_std 3 # the std for temporal similarity between the article and event (optional)
-    --gpu # to use GPU for event clustering (optional)
+    --rank_th 0.5 \
+    --time_std 3 \
+    --multilingual \
+    -gpu
 
 # create the multilingual event clusters (merging events)
 python scripts/03_event_clustering.py \
     --input_file ./data/processed/mono/dataset.test.csv \
     --output_file ./data/processed/multi/dataset.test.csv \
-    --rank_th 0.7 \ # threshold for deciding if events should be merged (optional)
-    --time_std 3 \ # the std for temporal similarity between an events (optional)
-    --w_reg 0.1 \ # the regularization factor for the wasserstein distance (optional)
-    --w_nit 10 \ # the number of iterations for the wasserstein distance (optional)
-    --gpu # to use GPU for event clustering (optional)
+    --rank_th 0.7 \
+    --time_std 3 \
+    --w_reg 0.1 \
+    --w_nit 10 \
+    -gpu
 
 # evaluate the clusters
 python scripts/04_evaluate.py \
@@ -117,22 +118,23 @@ the hyper-parameters were selected by evaluating the performance of the clusteri
 
 | Clustering Type | Parameter | Grid Search          | Description                                                         |
 | :-------------- | :-------- | :------------------- | :------------------------------------------------------------------ |
-| Monolingual     | rank_th   | [0.4, 0.5, 0.6, 0.7] | threshold for deciding if an article should be added to the cluster |
-| Monolingual     | time_std  | [1, 2, 3, 5]         | the std for temporal similarity between the article and event       |
-| Multilingual    | rank_th   | [0.6, 0.7, 0.8, 0.9] | threshold for deciding if events should be merged                   |
-| Multilingual    | time_std  | [1, 2, 3]            | the std for temporal similarity between an events                   |
+| article         | rank_th   | [0.4, 0.5, 0.6, 0.7] | threshold for deciding if an article should be added to the cluster |
+| article         | time_std  | [1, 2, 3, 5]         | the std for temporal similarity between the article and event       |
+| event           | rank_th   | [0.6, 0.7, 0.8, 0.9] | threshold for deciding if events should be merged                   |
+| event           | time_std  | [1, 2, 3]            | the std for temporal similarity between an events                   |
 
 The best performance is obtained with the following parameters:
 
 <table>
   <tr>
-    <th style="text-align:center;" colspan="2">Monolingual</th>
-    <th style="text-align:center;" colspan="2">Multilingual</th>
+    <th style="text-align:center;" colspan="3">Article</th>
+    <th style="text-align:center;" colspan="2">Event</th>
     <th style="text-align:center;" colspan="3">Standard</th>
     <th style="text-align:center;" colspan="3">BCubed</th>
     <th></th>
   </tr>
   <tr>
+    <th style="text-align:left;">Clustering Type</th>
     <th style="text-align:center;">rank_th</th>
     <th style="text-align:center;">time_std</th>
     <th style="text-align:center;">rank_th</th>
@@ -146,6 +148,7 @@ The best performance is obtained with the following parameters:
     <th style="text-align:center;">clusters</th>
   </tr>
   <tr>
+    <td style="text-align:left;">Monolingual</td>
     <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
@@ -158,7 +161,8 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">78.95</td>
     <td style="text-align:center;">1066</td>
   </tr>
-  <tr>
+   <tr>
+    <td style="text-align:left;">Monolingual</td>
     <td style="text-align:center;">0.6</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
@@ -171,17 +175,46 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">71.20</td>
     <td style="text-align:center;">1108</td>
   </tr>
+  <tr>
+    <td style="text-align:left;">Multilingual</td>
+    <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">92.20</td>
+    <td style="text-align:center;">98.55</td>
+    <td style="text-align:center;">86.62</td>
+    <td style="text-align:center;">86.67</td>
+    <td style="text-align:center;">92.94</td>
+    <td style="text-align:center;">81.20</td>
+    <td style="text-align:center;">1074</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;">Multilingual</td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">74.43</td>
+    <td style="text-align:center;">98.81</td>
+    <td style="text-align:center;">59.70</td>
+    <td style="text-align:center;">81.98</td>
+    <td style="text-align:center;">94.00</td>
+    <td style="text-align:center;">72.68</td>
+    <td style="text-align:center;">1112</td>
+  </tr>
 </table>
 
 ## 📣 Acknowledgments
 
 This work is developed by [Department of Artificial Intelligence][ailab] at [Jozef Stefan Institute][ijs].
 
-This work was supported by the Slovenian Research Agency, and the European Union's Horizon 2020 project Humane AI Net [H2020-ICT-952026].
+This work was supported by the Slovenian Research Agency, and the European Union's Horizon 2020 project Humane AI Net [[H2020-ICT-952026]].
 
 [python]: https://www.python.org/
 [git]: https://git-scm.com/
 [ailab]: http://ailab.ijs.si/
 [ijs]: https://www.ijs.si/
+[H2020-ICT-952026]: https://cordis.europa.eu/project/id/952026
 
 [^1]: S. Miranda, A. Znotiņš, S. B. Cohen, and G. Barzdins, “Multilingual clustering of streaming news” in Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing, Brussels, Belgium, 2018, pp. 4535–4544.

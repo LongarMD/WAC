@@ -78,6 +78,7 @@ def cluster_and_save_articles(input_file, output_file, run_as_test, use_gpu, arg
     strategy = MonolingualStrategy(
         rank_th=args.rank_th,
         time_std=args.time_std,
+        multilingual=args.multilingual,
     )
     event_monitor = NewsEventMonitor(strategy=strategy)
 
@@ -114,19 +115,60 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
+    parser = ArgumentParser(description="Clusters the articles into event clusters")
 
-    parser.add_argument("--input_file", default=None, type=str)
-    parser.add_argument("--output_file", default=None, type=str)
-    parser.add_argument("-gpu", "--use_gpu", action="store_true")
-    parser.add_argument("-o", "--override", action="store_true")
-    parser.add_argument("-t", "--test", action="store_true")
-    parser.add_argument("--rank_th", default=0.5, type=float)
-    parser.add_argument("--time_std", default=3.0, type=float)
+    parser.add_argument(
+        "--input_file",
+        default=None,
+        type=str,
+        required=True,
+        help="The input file containing the articles",
+    )
+    parser.add_argument(
+        "--output_file",
+        default=None,
+        type=str,
+        required=True,
+        help="The output file to store the clustered articles",
+    )
+    parser.add_argument(
+        "--rank_th",
+        default=0.5,
+        type=float,
+        help="The clustering rank threshold (default: 0.5)",
+    )
+    parser.add_argument(
+        "--time_std",
+        default=3.0,
+        type=float,
+        help="The clustering time standard deviation (default: 3.0)",
+    )
+
     parser.add_argument(
         "--lm",
         default="sentence-transformers/distiluse-base-multilingual-cased-v2",
         type=str,
+        help="The language model to use (default: 'sentence-transformers/distiluse-base-multilingual-cased-v2')",
+    )
+    parser.add_argument(
+        "--monolingual",
+        action="store_false",
+        help="If set, perform monolingual clustering",
+    )
+    parser.add_argument(
+        "-gpu",
+        "--use_gpu",
+        action="store_true",
+        help="If true, use GPU if available (default: False)",
+    )
+    parser.add_argument(
+        "-o",
+        "--override",
+        action="store_true",
+        help="Override the output file if it already exists (default: False)",
+    )
+    parser.add_argument(
+        "-t", "--test", action="store_true", help="Run in test mode (default: False)"
     )
     args = parser.parse_args()
 

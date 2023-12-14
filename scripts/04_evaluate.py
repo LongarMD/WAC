@@ -286,11 +286,37 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
-    parser.add_argument("--label_file_path", type=str)
-    parser.add_argument("--pred_file_dir", type=str)
-    parser.add_argument("--output_file", type=str)
-    parser.add_argument("--monolingual", action="store_true")
-    parser.add_argument("-t", "--test", action="store_true")
+    parser = ArgumentParser(
+        description="Evaluates the performance of the clustering algorithm"
+    )
+    parser.add_argument(
+        "--label_file_path",
+        type=str,
+        required=True,
+        help="The file that contains the true labels",
+    )
+    parser.add_argument(
+        "--pred_file_dir",
+        type=str,
+        required=True,
+        help="The directory that contains the files with predicted labels",
+    )
+    parser.add_argument(
+        "--output_file",
+        type=str,
+        required=True,
+        help="The output file to store the results",
+    )
+    parser.add_argument(
+        "--monolingual",
+        action="store_true",
+        help="Whether to evaluate for each language separately (default: False)",
+    )
+    parser.add_argument(
+        "-t",
+        "--test",
+        action="store_true",
+        help="Whether to run in test mode (default: False)",
+    )
     args = parser.parse_args()
     main(args)

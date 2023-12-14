@@ -34,15 +34,20 @@ def time_norm(x, nu=0, delta=1):
 
 
 class MonolingualStrategy:
-    def __init__(self, rank_th: float = 0.5, time_std: float = 3) -> None:
+    def __init__(
+        self, rank_th: float = 0.5, time_std: float = 3, multilingual: bool = False
+    ) -> None:
         self.rank_th = rank_th
         self.time_std = time_std
+        self.multilingual = multilingual
 
     def find_relevant_event(
         self, article: NewsArticle, active_events: List[NewsEvent], **kwargs
     ) -> NewsEvent:
         # get the events of the specific language
-        lang_events = [e for e in active_events if e.langs[0] == article.lang]
+        lang_events = [
+            e for e in active_events if e.langs[0] == article.lang or self.multilingual
+        ]
 
         if len(lang_events) == 0:
             # there are no events of the specific language
