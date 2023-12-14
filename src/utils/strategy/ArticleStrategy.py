@@ -33,13 +33,13 @@ def time_norm(x, nu=0, delta=1):
 # ================================================
 
 
-class MonolingualStrategy:
+class ArticleStrategy:
     def __init__(
-        self, rank_th: float = 0.5, time_std: float = 3, multilingual: bool = False
+        self, rank_th: float = 0.5, time_std: float = 3, monolingual: bool = False
     ) -> None:
         self.rank_th = rank_th
         self.time_std = time_std
-        self.multilingual = multilingual
+        self.multilingual = not monolingual
 
     def find_relevant_event(
         self, article: NewsArticle, active_events: List[NewsEvent], **kwargs

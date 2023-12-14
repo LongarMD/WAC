@@ -11,7 +11,7 @@ from src.utils.NewsArticle import NewsArticle
 from src.utils.NewsEventMonitor import NewsEventMonitor
 
 # import conditions
-from src.utils.strategy.Monolingual import MonolingualStrategy
+from src.utils.strategy.ArticleStrategy import ArticleStrategy
 
 # import models
 from src.models.SBERT import SBERT
@@ -75,10 +75,10 @@ def cluster_and_save_articles(input_file, output_file, run_as_test, use_gpu, arg
     if args.lm is not None:
         NewsArticle.embed_model = SBERT(model_name=args.lm, device=device).eval()
 
-    strategy = MonolingualStrategy(
+    strategy = ArticleStrategy(
         rank_th=args.rank_th,
         time_std=args.time_std,
-        multilingual=args.multilingual,
+        monolingual=args.monolingual,
     )
     event_monitor = NewsEventMonitor(strategy=strategy)
 
@@ -152,8 +152,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--monolingual",
-        action="store_false",
-        help="If set, perform monolingual clustering",
+        action="store_true",
+        help="If set, perform monolingual clustering. Else, performs multilingual clustering",
     )
     parser.add_argument(
         "-gpu",

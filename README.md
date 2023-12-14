@@ -116,12 +116,13 @@ The results will be stored in the `results` folder.
 
 the hyper-parameters were selected by evaluating the performance of the clustering algorithm on the dev set. We performed a grid-search across the following hyper-parameters:
 
-| Clustering Type | Parameter | Grid Search          | Description                                                         |
-| :-------------- | :-------- | :------------------- | :------------------------------------------------------------------ |
-| article         | rank_th   | [0.4, 0.5, 0.6, 0.7] | threshold for deciding if an article should be added to the cluster |
-| article         | time_std  | [1, 2, 3, 5]         | the std for temporal similarity between the article and event       |
-| event           | rank_th   | [0.6, 0.7, 0.8, 0.9] | threshold for deciding if events should be merged                   |
-| event           | time_std  | [1, 2, 3]            | the std for temporal similarity between an events                   |
+| Clustering | Parameter   | Grid Search          | Description                                                          |
+| :--------- | :---------- | :------------------- | :------------------------------------------------------------------- |
+| article    | rank_th     | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster. |
+| article    | time_std    | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.       |
+| article    | monolingual | [True, False]        | Whether to use monolingual or multilingual clustering.               |
+| event      | rank_th     | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                   |
+| event      | time_std    | [1, 2, 3]            | The std for temporal similarity between an events.                   |
 
 The best performance is obtained with the following parameters:
 
