@@ -51,9 +51,8 @@ class EventStrategy:
         self, target_event: NewsEvent, active_events: List[NewsEvent], **kwargs
     ) -> NewsEvent:
         # get the events of the specific language
-        lang_events = [e for e in active_events if e.langs[0] == target_event.langs[0]]
 
-        if len(lang_events) == 0:
+        if len(active_events) == 0:
             # there are no events of the specific language
             return None
 
@@ -61,11 +60,11 @@ class EventStrategy:
         pre_sim = torch.Tensor(
             [
                 self.__get_rank(target_event, event, sim_type="cosine")
-                for event in lang_events
+                for event in active_events
             ]
         )
         pre_sim_idx = torch.argsort(pre_sim, descending=True)
-        sim_events = [lang_events[idx] for idx in pre_sim_idx[: self.pre_sim_n]]
+        sim_events = [active_events[idx] for idx in pre_sim_idx[: self.pre_sim_n]]
 
         # calculate the rank of the events
         sims = torch.Tensor(

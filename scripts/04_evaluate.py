@@ -43,10 +43,10 @@ def create_dataframe(results):
 
     def format_result(result):
         return [
-            result[0][0],  # mono sim_th
-            result[0][1],  # mono time_th
-            result[1][0],  # multi sim_th
-            result[1][1],  # multi time_th
+            result[0][0],  # article rank_th
+            result[0][1],  # article time_std
+            result[1][0],  # event rank_th
+            result[1][1],  # event time_std
             result[2],  # languages (None is all)
             result[3]["standard"]["F1"] + result[3]["bcubed"]["F1"],  # sum of F1
             result[3]["standard"]["F1"],  # standard F1
@@ -61,10 +61,10 @@ def create_dataframe(results):
     df = pd.DataFrame(
         data=[format_result(r) for r in tqdm(results, desc="Output data prep")],
         columns=[
-            "rank_th (mono)",
-            "time_std (mono)",
-            "rank_th (multi)",
-            "time_std (multi)",
+            "rank_th (article)",
+            "time_std (article)",
+            "rank_th (event)",
+            "time_std (event)",
             "language",
             "SUM F1",
             "F1 (standard)",
@@ -268,10 +268,10 @@ def main(args):
     for f in tqdm(pred_files, desc="Files"):
         # get parameters from the file name
         params = [
-            p for p in f.split(".csv")[0].split("_") if "mono" in p or "multi" in p
+            p for p in f.split(".csv")[0].split("_") if "article" in p or "event" in p
         ]
-        monop = [p.split("=")[1] for p in params if "mono" in p] + [None, None]
-        multip = [p.split("=")[1] for p in params if "multi" in p] + [None, None]
+        monop = [p.split("=")[1] for p in params if "article" in p] + [None, None]
+        multip = [p.split("=")[1] for p in params if "event" in p] + [None, None]
 
         pred_df = load_file(
             os.path.join(args.pred_file_dir, f), type="pred", run_as_test=args.test

@@ -83,7 +83,7 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
     ARTICLE_RANK_TH="${ARTICLE_PARAMS[0]}"
     ARTICLE_TIME_STD="${ARTICLE_PARAMS[1]}"
 
-    ARTICLE_DATASET_FILE="dataset_monor=${ARTICLE_RANK_TH}_monot=${ARTICLE_TIME_STD}.csv"
+    ARTICLE_DATASET_FILE="dataset_articler=${ARTICLE_RANK_TH}_articlet=${ARTICLE_TIME_STD}.csv"
 
     echo "Start article clustering for: $TARGET_FILE (rank_th=$ARTICLE_RANK_TH; time_std=$ARTICLE_TIME_STD)"
 
@@ -102,7 +102,7 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
         EVENT_RANK_TH="${EVENT_PARAMS[0]}"
         EVENT_TIME_STD="${EVENT_PARAMS[1]}"
 
-        EVENT_DATASET_FILE="dataset_monor=${ARTICLE_RANK_TH}_monot=${ARTICLE_TIME_STD}_multir=${EVENT_RANK_TH}_multit=${EVENT_TIME_STD}.csv"
+        EVENT_DATASET_FILE="dataset_articler=${ARTICLE_RANK_TH}_articlet=${ARTICLE_TIME_STD}_eventr=${EVENT_RANK_TH}_eventt=${EVENT_TIME_STD}.csv"
 
         if [ ! -f "$EVENT_OUTPUT_DIR/$EVENT_DATASET_FILE" ]; then
             echo "Creating event clusters for: $ARTICLE_DATASET_FILE (rank_th=$EVENT_RANK_TH; time_std=$EVENT_TIME_STD)"
