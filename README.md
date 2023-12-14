@@ -143,7 +143,7 @@ The best performance is obtained with the following parameters:
     <th style="text-align:center;">F1</th>
     <th style="text-align:center;">P</th>
     <th style="text-align:center;">R</th>
-    <th style="text-align:center;">columns</th>
+    <th style="text-align:center;">clusters</th>
   </tr>
   <tr>
     <td style="text-align:center;">0.5</td>
