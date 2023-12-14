@@ -158,6 +158,19 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">78.95</td>
     <td style="text-align:center;">1066</td>
   </tr>
+  <tr>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">69.50</td>
+    <td style="text-align:center;">98.71</td>
+    <td style="text-align:center;">53.63</td>
+    <td style="text-align:center;">81.08</td>
+    <td style="text-align:center;">94.14</td>
+    <td style="text-align:center;">71.20</td>
+    <td style="text-align:center;">1108</td>
+  </tr>
 </table>
 
 ## 📣 Acknowledgments
