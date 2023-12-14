@@ -83,19 +83,18 @@ python scripts/01_prepare_data.py \
     --input_file ./data/raw/dataset.test.json \
     --output_file ./data/processed/dataset.test.csv
 
-# create the monolingual event clusters (merging articles)
+# cluster articles into events
 python scripts/02_article_clustering.py \
     --input_file ./data/processed/dataset.test.csv \
-    --output_file ./data/processed/mono/dataset.test.csv \
+    --output_file ./data/processed/article_clusters/dataset.test.csv \
     --rank_th 0.5 \
     --time_std 3 \
-    --multilingual \
     -gpu
 
-# create the multilingual event clusters (merging events)
+# cluster events based on their similarity
 python scripts/03_event_clustering.py \
-    --input_file ./data/processed/mono/dataset.test.csv \
-    --output_file ./data/processed/multi/dataset.test.csv \
+    --input_file ./data/processed/article_clusters/dataset.test.csv \
+    --output_file ./data/processed/event_clusters/dataset.test.csv \
     --rank_th 0.7 \
     --time_std 3 \
     --w_reg 0.1 \
@@ -105,7 +104,7 @@ python scripts/03_event_clustering.py \
 # evaluate the clusters
 python scripts/04_evaluate.py \
     --label_file_path ./data/processed/dataset.test.csv \
-    --pred_file_dir ./data/processed/multi \
+    --pred_file_dir ./data/processed/event_clusters \
     --output_file ./results/dataset.test.csv
 
 ```
@@ -116,12 +115,13 @@ The results will be stored in the `results` folder.
 
 the hyper-parameters were selected by evaluating the performance of the clustering algorithm on the dev set. We performed a grid-search across the following hyper-parameters:
 
-| Clustering Type | Parameter | Grid Search          | Description                                                         |
-| :-------------- | :-------- | :------------------- | :------------------------------------------------------------------ |
-| article         | rank_th   | [0.4, 0.5, 0.6, 0.7] | threshold for deciding if an article should be added to the cluster |
-| article         | time_std  | [1, 2, 3, 5]         | the std for temporal similarity between the article and event       |
-| event           | rank_th   | [0.6, 0.7, 0.8, 0.9] | threshold for deciding if events should be merged                   |
-| event           | time_std  | [1, 2, 3]            | the std for temporal similarity between an events                   |
+| Clustering | Parameter   | Grid Search          | Description                                                          |
+| :--------- | :---------- | :------------------- | :------------------------------------------------------------------- |
+| article    | rank_th     | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster. |
+| article    | time_std    | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.       |
+| article    | monolingual | [True, False]        | Whether to use monolingual or multilingual clustering.               |
+| event      | rank_th     | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                   |
+| event      | time_std    | [1, 2, 3]            | The std for temporal similarity between an events.                   |
 
 The best performance is obtained with the following parameters:
 

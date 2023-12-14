@@ -32,7 +32,7 @@ def time_norm(x, nu=0, delta=1):
 # ================================================
 
 
-class MultilingualStrategy:
+class EventStrategy:
     def __init__(
         self,
         rank_th: float = 0.7,
@@ -50,6 +50,8 @@ class MultilingualStrategy:
     def find_relevant_event(
         self, target_event: NewsEvent, active_events: List[NewsEvent], **kwargs
     ) -> NewsEvent:
+        # get the events of the specific language
+
         if len(active_events) == 0:
             # there are no events of the specific language
             return None

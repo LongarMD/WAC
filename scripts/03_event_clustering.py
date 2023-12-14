@@ -12,7 +12,7 @@ from src.utils.NewsEvent import NewsEvent
 from src.utils.NewsEventMonitor import NewsEventMonitor
 
 # import conditions
-from src.utils.strategy.Multilingual import MultilingualStrategy
+from src.utils.strategy.EventStrategy import EventStrategy
 
 # import models
 from src.models.SBERT import SBERT
@@ -84,7 +84,7 @@ def cluster_and_save_events(input_file, output_file, run_as_test, use_gpu, args)
     if args.lm is not None:
         NewsArticle.embed_model = SBERT(model_name=args.lm, device=device).eval()
 
-    strategy = MultilingualStrategy(
+    strategy = EventStrategy(
         rank_th=args.rank_th,
         time_std=args.time_std,
         w_reg=args.w_reg,
