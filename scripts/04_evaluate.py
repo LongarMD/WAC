@@ -21,9 +21,9 @@ def load_file(input_file, type: str = None, run_as_test: bool = False):
         "cluster_id": "str",
     }
 
-    if type == "label":
-        names.insert(5, "event_id")
-        dtype["event_id"] = "str"
+    # if type == "label":
+    #     names.insert(5, "event_id")
+    #     dtype["event_id"] = "str"
 
     df = pd.read_csv(
         input_file,
@@ -86,7 +86,7 @@ def create_dataframe(results):
 
 def prepare_predicts(true_df, pred_df):
     true_cls_ids = {
-        p["id"]: set([p["event_id"], p["cluster_id"]])
+        p["id"]: set([p["cluster_id"]])  # p["event_id"],
         for p in true_df.to_dict("records")
     }
     pred_cls_ids = {p["id"]: set([p["cluster_id"]]) for p in pred_df.to_dict("records")}

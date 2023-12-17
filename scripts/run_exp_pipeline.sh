@@ -21,7 +21,7 @@ fi;
 # format is rank_th;time_std
 declare -a ARTICLE_CLUSTER_PARAMS=(
     #"0.7;5"
-    #"0.7;3"
+    "0.7;3"
     #"0.7;2"
     #"0.7;1"
     #"0.6;5"
@@ -42,13 +42,13 @@ declare -a ARTICLE_CLUSTER_PARAMS=(
 declare -a EVENT_CLUSTER_PARAMS=(
     #"0.9;3"
     #"0.9;2"
-    #"0.9;1"
+    "0.9;1"
     #"0.8;3"
     #"0.8;2"
-    #"0.8;1"
-    "0.7;3"
+    "0.8;1"
+    #"0.7;3"
     #"0.7;2"
-    #"0.7;1"
+    "0.7;1"
     #"0.6;3"
     #"0.6;2"
     #"0.6;1"
@@ -57,14 +57,14 @@ declare -a EVENT_CLUSTER_PARAMS=(
 DATA_TYPE="test"
 
 # define the target file
-RAW_FILE="dataset.${DATA_TYPE}.json"
-TARGET_FILE="dataset.${DATA_TYPE}.csv"
+RAW_FILE=2021_tokyo_io_labels.csv # "dataset.${DATA_TYPE}.json"
+TARGET_FILE=2021_tokyo_io_labels.csv # "dataset.${DATA_TYPE}.csv"
 
 # define the folders used for the experiments
 RAW_INPUT_DIR="./data/raw"
-ARTICLE_INPUT_DIR="./data/processed"
-ARTICLE_OUTPUT_DIR="./data/processed/article_clusters/"
-EVENT_OUTPUT_DIR="./data/processed/event_clusters/"
+ARTICLE_INPUT_DIR="./data/processed.worldnews"
+ARTICLE_OUTPUT_DIR="./data/processed.worldnews/article_clusters/"
+EVENT_OUTPUT_DIR="./data/processed.worldnews/event_clusters/"
 EVAL_OUTPUT_DIR="./results"
 
 
@@ -93,6 +93,7 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
         --output_file $ARTICLE_OUTPUT_DIR/$ARTICLE_DATASET_FILE \
         --rank_th $ARTICLE_RANK_TH \
         --time_std $ARTICLE_TIME_STD \
+        --monolingual \
         -gpu
 
 

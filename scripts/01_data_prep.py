@@ -21,16 +21,19 @@ def main(args):
         warnings.warn(f"File already exists: {args.output_file}")
         return
     # load the raw articles
-    df = pd.read_json(args.input_file)
-    df.rename(
-        columns={"date": "date_time", "text": "body", "cluster": "cluster_id"},
-        inplace=True,
-    )
+    if "json" in args.input_file:
+        df = pd.read_json(args.input_file)
+        df.rename(
+            columns={"date": "date_time", "text": "body", "cluster": "cluster_id"},
+            inplace=True,
+        )
+    elif "csv" in args.input_file:
+        df = pd.read_csv(args.input_file)
 
     # FUTURE REFERENCE: this creates the data for the final evaluation
     # The algorithm will need only the title, body, lang and date_time
     # The event_id and cluster_id will be used only for the final evaluation
-    df = df[["id", "title", "body", "lang", "date_time", "event_id", "cluster_id"]]
+    df = df[["id", "title", "body", "lang", "date_time", "cluster_id"]]
     df.to_csv(args.output_file, encoding="utf-8", index=False)
 
 
