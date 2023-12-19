@@ -62,9 +62,9 @@ TARGET_FILE="dataset.${DATA_TYPE}.csv"
 
 # define the folders used for the experiments
 RAW_INPUT_DIR="./data/raw"
-ARTICLE_INPUT_DIR="./data/processed"
-ARTICLE_OUTPUT_DIR="./data/processed/article_clusters/"
-EVENT_OUTPUT_DIR="./data/processed/event_clusters/"
+ARTICLE_INPUT_DIR="./data/processed.test.wac_multi"
+ARTICLE_OUTPUT_DIR="./data/processed.test.wac_multi/article_clusters"
+EVENT_OUTPUT_DIR="./data/processed.test.wac_multi/event_clusters"
 EVAL_OUTPUT_DIR="./results"
 
 
@@ -93,6 +93,8 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
         --output_file $ARTICLE_OUTPUT_DIR/$ARTICLE_DATASET_FILE \
         --rank_th $ARTICLE_RANK_TH \
         --time_std $ARTICLE_TIME_STD \
+        --multilingual \
+        --ner_th 0.0 \
         -gpu
 
 

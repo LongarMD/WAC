@@ -81,8 +81,8 @@ def cluster_and_save_events(input_file, output_file, run_as_test, use_gpu, args)
     device = torch.device("cuda" if use_gpu and torch.cuda.is_available() else "cpu")
 
     # initialize LM
-    if args.lm is not None:
-        NewsArticle.embed_model = SBERT(model_name=args.lm, device=device).eval()
+    NewsArticle.rep_model = SBERT(model_name=args.lm, device=device).eval()
+    NewsEvent.use_ne = False
 
     strategy = EventStrategy(
         rank_th=args.rank_th,

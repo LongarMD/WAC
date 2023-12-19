@@ -37,7 +37,7 @@ class EventStrategy:
         self,
         rank_th: float = 0.7,
         time_std: float = 3,
-        pre_sim_n: int = 1000,
+        pre_sim_n: int = 500,
         w_reg: float = 0.1,
         w_nit: int = 10,
         device="cpu",
@@ -124,7 +124,16 @@ class EventStrategy:
         P = torch.sum(torch.max(time_scales, dim=1)[0]) / len(TIME_METRICS)
         R = torch.sum(torch.max(time_scales, dim=0)[0]) / len(TIME_METRICS)
         F1 = 2 * P * R / (P + R)
-        return F1  # sum(time_scales) / len(TIME_METRICS)
+        return F1
+
+    def __get_lang_correction(self, curr_langs, rank_langs):
+        lang_corr = torch.tensor(
+            [
+                [int(curr_langs[i] != rank_langs[j]) for j in range(len(rank_langs))]
+                for i in range(len(curr_langs))
+            ]
+        ).unsqueeze(0)
+        return lang_corr
 
     def __get_wasserstein_similarity(
         self, curr_event: NewsEvent, rank_event: NewsEvent
@@ -174,12 +183,3 @@ class EventStrategy:
             raise NotImplementedError(f"Similarity type {sim_type} not implemented")
 
         return time_sim * content_sim
-
-    def __get_lang_correction(self, curr_langs, rank_langs):
-        lang_corr = torch.tensor(
-            [
-                [int(curr_langs[i] != rank_langs[j]) for j in range(len(rank_langs))]
-                for i in range(len(curr_langs))
-            ]
-        ).unsqueeze(0)
-        return lang_corr

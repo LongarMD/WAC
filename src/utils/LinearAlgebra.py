@@ -19,13 +19,6 @@ def cosine_similarity(vector1: torch.Tensor, vector2: torch.Tensor) -> float:
     return vector1.dot(vector2).item()
 
 
-def avg_cosine_similarity(
-    vectors: List[torch.Tensor], vector_prime: torch.Tensor
-) -> float:
-    cosines = [cosine_similarity(vector, vector_prime) for vector in vectors]
-    return sum(cosines) / len(cosines)
-
-
 def jaccard_index(s1: set, s2: set) -> float:
     """Gets the Jaccard Index
     Calculates the Jaccard Index using the following equation:
@@ -36,30 +29,24 @@ def jaccard_index(s1: set, s2: set) -> float:
     Returns:
         jaccard_index (float): The Jaccard Index of the two sets.
     """
+    if len(s1) == 0 or len(s2) == 0:
+        return 0
     return len(s1 & s2) / len(s1 | s2)
 
 
-def get_intra_distances(embeds: List[torch.Tensor], centroid: torch.Tensor) -> dict:
-    if len(embeds) < 2:
-        return {"maximum": 1.0, "average": 1.0, "centroid": 1.0, "distances": []}
-
-    X = torch.cat(tuple([embed.unsqueeze(0) for embed in embeds]), 0)
-    S = 1 - torch.matmul(X, X.T)
-
-    # intra-cluster distance
-    maximum = torch.max(S)
-    average = torch.sum(S) / (S.shape[0] * (S.shape[1] - 1))
-
-    # centroid diameter distance
-    dists = 1 - torch.matmul(X, centroid)
-    c_dist = torch.sum(dists) / X.shape[0]
-
-    return {
-        "maximum": maximum.item(),
-        "average": average.item(),
-        "centroid": c_dist.item(),
-        "distances": dists.tolist(),
-    }
+def avg_overlap(s1: set, s2: set) -> float:
+    """Gets the maximum overlap
+    Calculates the maximum overlap using the following equation:
+        Max_Overlap(s1, s2) = \\frac{s1 \\cap s2}{min(|s1|,|s2|)}
+    Args:
+        s1 (set): The first set.
+        s2 (set): The second set.
+    Returns:
+        max_overlap (float): The maximum overlap of two sets.
+    """
+    if len(s1) == 0 or len(s2) == 0:
+        return None
+    return sum([len(s1 & s2) / len(s) for s in [s1, s2]]) / 2
 
 
 # ===============================================
@@ -131,14 +118,3 @@ def get_min(vals: List[float]) -> float:
 
 def get_avg(vals: List[float]) -> float:
     return sum(vals) / len(vals)
-
-
-def get_var(vals: List[float]) -> float:
-    if len(vals) < 2:
-        return 0
-    avg = get_avg(vals)
-    return sum([math.pow(v - avg, 2) for v in vals]) / (len(vals) - 1)
-
-
-def get_std(vals: List[float]) -> float:
-    return math.sqrt(get_var(vals))

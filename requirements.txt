@@ -9,6 +9,7 @@ scipy
 torch
 lightning
 transformers
+span_marker
 # visuals
 matplotlib
 datachart
