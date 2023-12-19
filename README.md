@@ -103,9 +103,9 @@ python scripts/03_event_clustering.py \
 
 # evaluate the clusters
 python scripts/04_evaluate.py \
-    --label_file_path ./data/processed/dataset.test.csv \
-    --pred_file_dir ./data/processed/event_clusters \
-    --output_file ./results/dataset.test.csv
+    --label_file_path ./data/processed.dev.wac+ner/dataset.dev.csv \
+    --pred_file_dir ./data/processed.dev.wac+ner/event_clusters \
+    --output_file ./results/dataset.dev.wac+ner.csv
 
 ```
 
@@ -115,13 +115,13 @@ The results will be stored in the `results` folder.
 
 the hyper-parameters were selected by evaluating the performance of the clustering algorithm on the dev set. We performed a grid-search across the following hyper-parameters:
 
-| Clustering | Parameter   | Grid Search          | Description                                                          |
-| :--------- | :---------- | :------------------- | :------------------------------------------------------------------- |
-| article    | rank_th     | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster. |
-| article    | time_std    | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.       |
-| article    | monolingual | [True, False]        | Whether to use monolingual or multilingual clustering.               |
-| event      | rank_th     | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                   |
-| event      | time_std    | [1, 2, 3]            | The std for temporal similarity between an events.                   |
+| Clustering | Parameter    | Grid Search          | Description                                                          |
+| :--------- | :----------- | :------------------- | :------------------------------------------------------------------- |
+| article    | rank_th      | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster. |
+| article    | time_std     | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.       |
+| article    | multilingual | [True, False]        | Whether to use monolingual or multilingual clustering.               |
+| event      | rank_th      | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                   |
+| event      | time_std     | [1, 2, 3]            | The std for temporal similarity between an events.                   |
 
 The best performance is obtained with the following parameters:
 
@@ -134,7 +134,7 @@ The best performance is obtained with the following parameters:
     <th></th>
   </tr>
   <tr>
-    <th style="text-align:left;">Clustering Type</th>
+    <th style="text-align:left;">Method</th>
     <th style="text-align:center;">rank_th</th>
     <th style="text-align:center;">time_std</th>
     <th style="text-align:center;">rank_th</th>
@@ -148,7 +148,7 @@ The best performance is obtained with the following parameters:
     <th style="text-align:center;">clusters</th>
   </tr>
   <tr>
-    <td style="text-align:left;">Monolingual</td>
+    <td style="text-align:left;">WAC<sub>mono</sub></td>
     <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
@@ -161,22 +161,22 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">78.95</td>
     <td style="text-align:center;">1066</td>
   </tr>
-   <tr>
-    <td style="text-align:left;">Monolingual</td>
-    <td style="text-align:center;">0.6</td>
+  <tr>
+    <td style="text-align:left;">WAC<sub>mono</sub>+NER</td>
+    <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
-    <td style="text-align:center;">69.50</td>
-    <td style="text-align:center;">98.71</td>
-    <td style="text-align:center;">53.63</td>
-    <td style="text-align:center;">81.08</td>
-    <td style="text-align:center;">94.14</td>
-    <td style="text-align:center;">71.20</td>
-    <td style="text-align:center;">1108</td>
+    <td style="text-align:center;">85.02</td>
+    <td style="text-align:center;">98.52</td>
+    <td style="text-align:center;">74.77</td>
+    <td style="text-align:center;">84.78</td>
+    <td style="text-align:center;">93.51</td>
+    <td style="text-align:center;">77.54</td>
+    <td style="text-align:center;">1089</td>
   </tr>
   <tr>
-    <td style="text-align:left;">Multilingual</td>
+    <td style="text-align:left;">WAC<sub>multi</sub></td>
     <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
@@ -190,7 +190,35 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1074</td>
   </tr>
   <tr>
-    <td style="text-align:left;">Multilingual</td>
+    <td style="text-align:left;">WAC<sub>mono</sub></td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">69.50</td>
+    <td style="text-align:center;">98.71</td>
+    <td style="text-align:center;">53.63</td>
+    <td style="text-align:center;">81.08</td>
+    <td style="text-align:center;">94.14</td>
+    <td style="text-align:center;">71.20</td>
+    <td style="text-align:center;">1108</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;">WAC<sub>mono</sub>+NER</td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">67.23</td>
+    <td style="text-align:center;">98.12</td>
+    <td style="text-align:center;">51.14</td>
+    <td style="text-align:center;">79.72</td>
+    <td style="text-align:center;">93.80</td>
+    <td style="text-align:center;">69.32</td>
+    <td style="text-align:center;">1109</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;">WAC<sub>multi</sub></td>
     <td style="text-align:center;">0.6</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>

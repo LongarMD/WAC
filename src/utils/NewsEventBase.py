@@ -16,7 +16,7 @@ class NewsEventBase:
         self.date_time = None
 
         # update the event properties
-        self.__init_date_time()
+        self.__get_date_time()
 
     # ==================================
     # Default Override Methods
@@ -53,12 +53,12 @@ class NewsEventBase:
         # append the article
         self.articles.append(article)
         # update the event values
-        self.__update_date_time()
+        self.__get_date_time()
 
     def add_articles(self, articles):
         self.articles.extend(articles)
         # update the event values
-        self.__update_date_time()
+        self.__get_date_time()
 
     def get_article_embeddings(self, type="content"):
         return torch.stack(
@@ -78,7 +78,7 @@ class NewsEventBase:
     # Initialization Methods
     # ==================================
 
-    def __init_date_time(self):
+    def __get_date_time(self):
         if len(self.articles) == 0:
             # there are no articles
             self.date_time = None
@@ -90,16 +90,3 @@ class NewsEventBase:
             "avg": get_avg(times),
             "max": get_max(times),
         }
-
-    # ==================================
-    # Update Methods
-    # ==================================
-
-    def __update_date_time(self):
-        if len(self.articles) != 0:
-            times = [a.date_time for a in self.articles]
-            self.date_time = {
-                "min": get_min(times),
-                "avg": get_avg(times),
-                "max": get_max(times),
-            }

@@ -43,7 +43,8 @@ class Article(TypedDict):
 class NewsArticle:
     """The class describing the article instance"""
 
-    embed_model: Any = None
+    rep_model: Any = None
+    ner_model: Any = None
 
     # format="%Y-%m-%dT%H:%M:%SZ"
     def __init__(self, article: Article) -> None:
@@ -119,7 +120,7 @@ class NewsArticle:
         return " ".join([getattr(self, field) for field in fields])
 
     def get_embedding(self, type="content") -> torch.Tensor:
-        if NewsArticle.embed_model is None:
+        if NewsArticle.rep_model is None:
             raise RuntimeError("Embedding model not initialized")
 
         if type == "content":
@@ -142,7 +143,8 @@ class NewsArticle:
             return self.__content_embedding
 
         # get the content representation
-        self.__content_embedding = NewsArticle.embed_model(self.get_text())[0]
+        text = self.get_text()
+        self.__content_embedding = NewsArticle.rep_model(text)[0]
         # return the content embedding
         return self.__content_embedding
 
@@ -156,9 +158,8 @@ class NewsArticle:
             return self.__title_embedding
 
         # get the content representation
-        self.__title_embedding = NewsArticle.embed_model(
-            self.get_text(fields=["title"])
-        )[0]
+        text = self.get_text(fields=["title"])
+        self.__title_embedding = NewsArticle.rep_model(text)[0]
         # return the content embedding
         return self.__title_embedding
 
@@ -172,9 +173,8 @@ class NewsArticle:
             return self.__body_embedding
 
         # get the content representation
-        self.__body_embedding = NewsArticle.embed_model(self.get_text(fields=["body"]))[
-            0
-        ]
+        text = self.get_text(fields=["body"])
+        self.__body_embedding = NewsArticle.rep_model(text)[0]
         # return the content embedding
         return self.__body_embedding
 
@@ -185,3 +185,17 @@ class NewsArticle:
                 was published.
         """
         return datetime.datetime.fromtimestamp(self.date_time)
+
+    def get_named_entities(self) -> List[Tuple[str, str]]:
+        if NewsArticle.ner_model is None:
+            raise RuntimeError("Named entity recognition model not initialized")
+
+        if isinstance(self.__named_entities, set):
+            # named entities are already available
+            return self.__named_entities
+
+        # get the named entities
+        named_entities = NewsArticle.ner_model(self.get_text())
+        self.__named_entities = set([e[0] for e in named_entities])
+        # return the named entities
+        return self.__named_entities

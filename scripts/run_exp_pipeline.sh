@@ -93,7 +93,6 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
         --output_file $ARTICLE_OUTPUT_DIR/$ARTICLE_DATASET_FILE \
         --rank_th $ARTICLE_RANK_TH \
         --time_std $ARTICLE_TIME_STD \
-        --monolingual \
         -gpu
 
 

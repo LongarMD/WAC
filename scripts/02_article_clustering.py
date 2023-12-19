@@ -8,6 +8,7 @@ import pandas as pd
 from tqdm import tqdm
 
 from src.utils.NewsArticle import NewsArticle
+from src.utils.NewsEvent import NewsEvent
 from src.utils.NewsEventMonitor import NewsEventMonitor
 
 # import conditions
@@ -15,6 +16,7 @@ from src.utils.strategy.ArticleStrategy import ArticleStrategy
 
 # import models
 from src.models.SBERT import SBERT
+from src.models.MNER import MNER
 
 # ================================================
 # Data loader functions
@@ -72,13 +74,16 @@ def cluster_and_save_articles(input_file, output_file, run_as_test, use_gpu, arg
     device = torch.device("cuda" if use_gpu and torch.cuda.is_available() else "cpu")
 
     # initialize LM
-    if args.lm is not None:
-        NewsArticle.embed_model = SBERT(model_name=args.lm, device=device).eval()
+    NewsArticle.rep_model = SBERT(model_name=args.lm, device=device).eval()
+    if args.ner != "" and args.ner_th > 0.0:
+        NewsArticle.ner_model = MNER(model_name=args.ner, device=device).eval()
+        NewsEvent.use_ne = True
 
     strategy = ArticleStrategy(
         rank_th=args.rank_th,
+        ner_th=args.ner_th,
         time_std=args.time_std,
-        monolingual=args.monolingual,
+        multilingual=args.multilingual,
     )
     event_monitor = NewsEventMonitor(strategy=strategy)
 
@@ -143,6 +148,12 @@ if __name__ == "__main__":
         type=float,
         help="The clustering time standard deviation (default: 3.0)",
     )
+    parser.add_argument(
+        "--ner_th",
+        default=0.2,
+        type=float,
+        help="The named entity similarity threshold (default: 0.2)",
+    )
 
     parser.add_argument(
         "--lm",
@@ -151,9 +162,15 @@ if __name__ == "__main__":
         help="The language model to use (default: 'sentence-transformers/distiluse-base-multilingual-cased-v2')",
     )
     parser.add_argument(
-        "--monolingual",
+        "--ner",
+        default="tomaarsen/span-marker-mbert-base-multinerd",
+        type=str,
+        help="The SpanMarker model to use (default: 'tomaarsen/span-marker-mbert-base-multinerd')",
+    )
+    parser.add_argument(
+        "--multilingual",
         action="store_true",
-        help="If set, perform monolingual clustering. Else, performs multilingual clustering",
+        help="If set, perform multilingual clustering. Else, performs monolingual clustering",
     )
     parser.add_argument(
         "-gpu",
