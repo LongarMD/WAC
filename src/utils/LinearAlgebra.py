@@ -35,14 +35,14 @@ def jaccard_index(s1: set, s2: set) -> float:
 
 
 def avg_overlap(s1: set, s2: set) -> float:
-    """Gets the maximum overlap
-    Calculates the maximum overlap using the following equation:
-        Max_Overlap(s1, s2) = \\frac{s1 \\cap s2}{min(|s1|,|s2|)}
+    """Gets the average overlap
+    Calculates the average overlap using the following equation:
+        avg_overlap(s1, s2) = (\\frac{|s1 \\cap s2|}{|s1|} + \\frac{|s1 \\cap s2|}{|s2|}) / 2
     Args:
         s1 (set): The first set.
         s2 (set): The second set.
     Returns:
-        max_overlap (float): The maximum overlap of two sets.
+        avg_overlap (float): The average overlap of two sets.
     """
     if len(s1) == 0 or len(s2) == 0:
         return None

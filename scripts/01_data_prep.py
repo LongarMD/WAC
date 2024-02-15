@@ -23,12 +23,18 @@ def main(args):
     # load the raw articles
     if "json" in args.input_file:
         df = pd.read_json(args.input_file)
+        # FUTURE REFERENCE: rename the files appropriately
         df.rename(
             columns={"date": "date_time", "text": "body", "cluster": "cluster_id"},
             inplace=True,
         )
     elif "csv" in args.input_file:
         df = pd.read_csv(args.input_file)
+        # FUTURE REFERENCE: rename the files appropriately
+        df.rename(
+            columns={"dateTime": "date_time", "clusterId": "cluster_id"},
+            inplace=True,
+        )
 
     # FUTURE REFERENCE: this creates the data for the final evaluation
     # The algorithm will need only the title, body, lang and date_time
