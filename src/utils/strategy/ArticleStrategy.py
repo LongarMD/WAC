@@ -37,13 +37,13 @@ class ArticleStrategy:
     def __init__(
         self,
         rank_th: float = 0.5,
-        ner_th: float = 0.2,
+        ents_th: float = 0.2,
         time_std: float = 3,
         multilingual: bool = False,
     ) -> None:
         self.rank_th = rank_th
         self.time_std = time_std
-        self.ner_th = ner_th
+        self.ents_th = ents_th
         self.multilingual = multilingual
 
     def find_relevant_event(
@@ -123,7 +123,7 @@ class ArticleStrategy:
         return sim if sim is not None else 0
 
     def __has_similar_ner(self, article: NewsArticle, event: NewsEvent) -> bool:
-        return self.__get_ner_similarity(article, event) > self.ner_th
+        return self.__get_ner_similarity(article, event) > self.ents_th
 
     def __get_rank(self, article: NewsArticle, event: NewsEvent) -> float:
         time_sim = self.__get_time_similarity(event, article.date_time)

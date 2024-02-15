@@ -55,8 +55,7 @@ pip install -e .
 
 ## 🗃️ Data
 
-The data used in the experiments are a currated set of news articles retrieved from the Event Registry and prepared
-for the scientific paper[^1].
+The data used in the experiments are a currated set of news articles retrieved from the Event Registry and prepared for the scientific paper[^1].
 
 To download the data run:
 
@@ -75,7 +74,7 @@ To run the experiments, run the folowing command:
 bash scripts/run_exp_pipeline.sh
 ```
 
-The command above will perform a series of experiments by executing the following steps:
+The command above will perform a series of experiments by executing the following steps (the names of the files are listed in the `scripts/run_exp_pipeline.sh` file):
 
 ```bash
 # prepare the data examples for the experiment
@@ -89,6 +88,8 @@ python scripts/02_article_clustering.py \
     --output_file ./data/processed/article_clusters/dataset.test.csv \
     --rank_th 0.5 \
     --time_std 3 \
+    --multilingual \
+    --ents_th 0.0 \
     -gpu
 
 # cluster events based on their similarity
@@ -103,9 +104,9 @@ python scripts/03_event_clustering.py \
 
 # evaluate the clusters
 python scripts/04_evaluate.py \
-    --label_file_path ./data/processed.dev.wac+ner/dataset.dev.csv \
-    --pred_file_dir ./data/processed.dev.wac+ner/event_clusters \
-    --output_file ./results/dataset.dev.wac+ner.csv
+    --label_file_path ./data/processed/dataset.test.csv \
+    --pred_file_dir ./data/processed/event_clusters \
+    --output_file ./results/dataset.test.csv
 
 ```
 
@@ -115,18 +116,20 @@ The results will be stored in the `results` folder.
 
 the hyper-parameters were selected by evaluating the performance of the clustering algorithm on the dev set. We performed a grid-search across the following hyper-parameters:
 
-| Clustering | Parameter    | Grid Search          | Description                                                          |
-| :--------- | :----------- | :------------------- | :------------------------------------------------------------------- |
-| article    | rank_th      | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster. |
-| article    | time_std     | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.       |
-| article    | multilingual | [True, False]        | Whether to use monolingual or multilingual clustering.               |
-| event      | rank_th      | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                   |
-| event      | time_std     | [1, 2, 3]            | The std for temporal similarity between an events.                   |
+| Clustering | Parameter    | Grid Search          | Description                                                                                     |
+| :--------- | :----------- | :------------------- | :---------------------------------------------------------------------------------------------- |
+| article    | rank_th      | [0.4, 0.5, 0.6, 0.7] | Threshold for deciding if an article should be added to the cluster.                            |
+| article    | ents_th      | [0.2, 0.3, 0.4, 0.5] | Threshold for deciding if an article should be added to the cluster (considering the entities). |
+| article    | time_std     | [1, 2, 3, 5]         | The std for temporal similarity between the article and event.                                  |
+| article    | multilingual | [True, False]        | Whether to use monolingual or multilingual clustering.                                          |
+| event      | rank_th      | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                                              |
+| event      | time_std     | [1, 2, 3]            | The std for temporal similarity between an events.                                              |
 
 The best performance is obtained with the following parameters:
 
 <table>
   <tr>
+    <th style="text-align:center;" colspan="1"></th>
     <th style="text-align:center;" colspan="3">Article</th>
     <th style="text-align:center;" colspan="2">Event</th>
     <th style="text-align:center;" colspan="3">Standard</th>
@@ -136,6 +139,7 @@ The best performance is obtained with the following parameters:
   <tr>
     <th style="text-align:left;">Method</th>
     <th style="text-align:center;">rank_th</th>
+    <th style="text-align:center;">ents_th</th>
     <th style="text-align:center;">time_std</th>
     <th style="text-align:center;">rank_th</th>
     <th style="text-align:center;">time_std</th>
@@ -148,8 +152,9 @@ The best performance is obtained with the following parameters:
     <th style="text-align:center;">clusters</th>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>mono</sub></td>
+    <td style="text-align:left;">WAC<sub>MONO</sub></td>
     <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
@@ -162,8 +167,9 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1066</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>mono</sub>+NER</td>
+    <td style="text-align:left;">WAC<sub>MONO+NER</sub></td>
     <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">0.2</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
@@ -176,8 +182,9 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1089</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>multi</sub></td>
+    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
     <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
@@ -190,8 +197,9 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1074</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>mono</sub></td>
+    <td style="text-align:left;">WAC<sub>MONO</sub></td>
     <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
@@ -204,8 +212,9 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1108</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>mono</sub>+NER</td>
+    <td style="text-align:left;">WAC<sub>MONO+NER</sub></td>
     <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">0.2</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>
@@ -218,8 +227,9 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1109</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>multi</sub></td>
+    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
     <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
     <td style="text-align:center;">0.7</td>
     <td style="text-align:center;">3</td>

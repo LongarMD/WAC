@@ -96,7 +96,7 @@ for ARTICLE_CLUSTER_PARAM in "${ARTICLE_CLUSTER_PARAMS[@]}"; do
         --rank_th $ARTICLE_RANK_TH \
         --time_std $ARTICLE_TIME_STD \
         --multilingual \
-        --ner_th 0.0 \
+        --ents_th 0.0 \
         -gpu
 
 

@@ -75,13 +75,13 @@ def cluster_and_save_articles(input_file, output_file, run_as_test, use_gpu, arg
 
     # initialize LM
     NewsArticle.rep_model = SBERT(model_name=args.lm, device=device).eval()
-    if args.ner != "" and args.ner_th > 0.0:
+    if args.ner != "" and args.ents_th > 0.0:
         NewsArticle.ner_model = MNER(model_name=args.ner, device=device).eval()
         NewsEvent.use_ne = True
 
     strategy = ArticleStrategy(
         rank_th=args.rank_th,
-        ner_th=args.ner_th,
+        ents_th=args.ents_th,
         time_std=args.time_std,
         multilingual=args.multilingual,
     )
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         help="The clustering time standard deviation (default: 3.0)",
     )
     parser.add_argument(
-        "--ner_th",
+        "--ents_th",
         default=0.2,
         type=float,
         help="The named entity similarity threshold (default: 0.2)",
