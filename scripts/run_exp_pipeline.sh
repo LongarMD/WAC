@@ -58,13 +58,15 @@ DATA_TYPE="test"
 
 # define the target file
 RAW_FILE="dataset.${DATA_TYPE}.json"
-TARGET_FILE="dataset.${DATA_TYPE}.csv"
+TARGET_FILE="dataset.${DATA_TYPE}.multi.wac.csv"
+
+FOLDER_DIR="./data/processed.${DATA_TYPE}.multi.wac"
 
 # define the folders used for the experiments
 RAW_INPUT_DIR="./data/raw"
-ARTICLE_INPUT_DIR="./data/processed.test.wac_multi"
-ARTICLE_OUTPUT_DIR="./data/processed.test.wac_multi/article_clusters"
-EVENT_OUTPUT_DIR="./data/processed.test.wac_multi/event_clusters"
+ARTICLE_INPUT_DIR=$FOLDER_DIR
+ARTICLE_OUTPUT_DIR="$FOLDER_DIR/article_clusters"
+EVENT_OUTPUT_DIR="$FOLDER_DIR/event_clusters"
 EVAL_OUTPUT_DIR="./results"
 
 
