@@ -125,6 +125,8 @@ the hyper-parameters were selected by evaluating the performance of the clusteri
 | event      | rank_th      | [0.6, 0.7, 0.8, 0.9] | Threshold for deciding if events should be merged.                                              |
 | event      | time_std     | [1, 2, 3]            | The std for temporal similarity between an events.                                              |
 
+#### Performance results
+
 The best performance is obtained with the following parameters:
 
 <table>
@@ -167,6 +169,21 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">1066</td>
   </tr>
   <tr>
+    <td style="text-align:left;">WAC<sub>MONO</sub></td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">69.50</td>
+    <td style="text-align:center;">98.71</td>
+    <td style="text-align:center;">53.63</td>
+    <td style="text-align:center;">81.08</td>
+    <td style="text-align:center;"><b>94.14</b></td>
+    <td style="text-align:center;">71.20</td>
+    <td style="text-align:center;">1108</td>
+  </tr>
+  <tr>
     <td style="text-align:left;">WAC<sub>MONO+NER</sub></td>
     <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">0.2</td>
@@ -180,36 +197,6 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">93.51</td>
     <td style="text-align:center;">77.54</td>
     <td style="text-align:center;">1089</td>
-  </tr>
-  <tr>
-    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
-    <td style="text-align:center;">0.5</td>
-    <td style="text-align:center;">-</td>
-    <td style="text-align:center;">3</td>
-    <td style="text-align:center;">0.7</td>
-    <td style="text-align:center;">3</td>
-    <td style="text-align:center;">92.20</td>
-    <td style="text-align:center;">98.55</td>
-    <td style="text-align:center;">86.62</td>
-    <td style="text-align:center;">86.67</td>
-    <td style="text-align:center;">92.94</td>
-    <td style="text-align:center;">81.20</td>
-    <td style="text-align:center;">1074</td>
-  </tr>
-  <tr>
-    <td style="text-align:left;">WAC<sub>MONO</sub></td>
-    <td style="text-align:center;">0.6</td>
-    <td style="text-align:center;">-</td>
-    <td style="text-align:center;">3</td>
-    <td style="text-align:center;">0.7</td>
-    <td style="text-align:center;">3</td>
-    <td style="text-align:center;">69.50</td>
-    <td style="text-align:center;">98.71</td>
-    <td style="text-align:center;">53.63</td>
-    <td style="text-align:center;">81.08</td>
-    <td style="text-align:center;">94.14</td>
-    <td style="text-align:center;">71.20</td>
-    <td style="text-align:center;">1108</td>
   </tr>
   <tr>
     <td style="text-align:left;">WAC<sub>MONO+NER</sub></td>
@@ -228,6 +215,99 @@ The best performance is obtained with the following parameters:
   </tr>
   <tr>
     <td style="text-align:left;">WAC<sub>MULTI</sub></td>
+    <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;"><b>92.20</b></td>
+    <td style="text-align:center;">98.55</td>
+    <td style="text-align:center;"><b>86.62</b></td>
+    <td style="text-align:center;"><b>86.67</b></td>
+    <td style="text-align:center;">92.94</td>
+    <td style="text-align:center;"><b>81.20</b></td>
+    <td style="text-align:center;">1074</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">74.43</td>
+    <td style="text-align:center;"><b>98.81</b></td>
+    <td style="text-align:center;">59.70</td>
+    <td style="text-align:center;">81.98</td>
+    <td style="text-align:center;">94.00</td>
+    <td style="text-align:center;">72.68</td>
+    <td style="text-align:center;">1112</td>
+  </tr>
+</table>
+
+#### Cluster merging contribution assessment
+
+To evaluate the impact the cluster merging process has on the algorithm’s performance, we compare the WAC algorithm variants to those where the cluster merging phase was not performed. Note that we compare only the WAC<sub>MULTI</sub> variant, as it already generates multilingual clusters during the article clustering phase
+
+
+<table>
+  <tr>
+    <th style="text-align:center;" colspan="1"></th>
+    <th style="text-align:center;" colspan="3">Article</th>
+    <th style="text-align:center;" colspan="2">Event</th>
+    <th style="text-align:center;" colspan="3">Standard</th>
+    <th style="text-align:center;" colspan="3">BCubed</th>
+    <th></th>
+  </tr>
+  <tr>
+    <th style="text-align:left;">Method</th>
+    <th style="text-align:center;">rank_th</th>
+    <th style="text-align:center;">ents_th</th>
+    <th style="text-align:center;">time_std</th>
+    <th style="text-align:center;">rank_th</th>
+    <th style="text-align:center;">time_std</th>
+    <th style="text-align:center;">F1</th>
+    <th style="text-align:center;">P</th>
+    <th style="text-align:center;">R</th>
+    <th style="text-align:center;">F1</th>
+    <th style="text-align:center;">P</th>
+    <th style="text-align:center;">R</th>
+    <th style="text-align:center;">clusters</th>
+  </tr>
+
+  <tr>
+    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
+    <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">0.7</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;"><b>92.20</b></td>
+    <td style="text-align:center;">98.55</td>
+    <td style="text-align:center;"><b>86.62</b></td>
+    <td style="text-align:center;"><b>86.67</b></td>
+    <td style="text-align:center;">92.94</td>
+    <td style="text-align:center;"><b>81.20</b></td>
+    <td style="text-align:center;">1074</td>
+  </tr>
+  <tr>
+    <td style="text-align:left;">WAC<sub>MULTI</sub> (no merge)</td>
+    <td style="text-align:center;">0.5</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">56.04</td>
+    <td style="text-align:center;">98.71</td>
+    <td style="text-align:center;">39.12</td>
+    <td style="text-align:center;">71.14</td>
+    <td style="text-align:center;">96.98</td>
+    <td style="text-align:center;">56.17</td>
+    <td style="text-align:center;">2339</td>
+  </tr>
+
+  <tr>
+    <td style="text-align:left;">WAC<sub>MULTI</sub></td>
     <td style="text-align:center;">0.6</td>
     <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
@@ -241,7 +321,24 @@ The best performance is obtained with the following parameters:
     <td style="text-align:center;">72.68</td>
     <td style="text-align:center;">1112</td>
   </tr>
+  <tr>
+    <td style="text-align:left;">WAC<sub>MULTI</sub> (no merge)</td>
+    <td style="text-align:center;">0.6</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">3</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">-</td>
+    <td style="text-align:center;">24.28</td>
+    <td style="text-align:center;"><b>99.40</b></td>
+    <td style="text-align:center;">13.83</td>
+    <td style="text-align:center;">47.10</td>
+    <td style="text-align:center;"><b>99.04</b></td>
+    <td style="text-align:center;">31.59</td>
+    <td style="text-align:center;">4675</td>
+  </tr>
 </table>
+
+
 
 ## 📣 Acknowledgments
 
