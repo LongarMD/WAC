@@ -132,14 +132,14 @@ The best performance is obtained with the following parameters:
 <table>
   <tr>
     <th style="text-align:center;" colspan="1"></th>
-    <th style="text-align:center;" colspan="3">Article</th>
-    <th style="text-align:center;" colspan="2">Event</th>
+    <th style="text-align:center;" colspan="3">Article Clustering</th>
+    <th style="text-align:center;" colspan="2">Cluster Merging</th>
     <th style="text-align:center;" colspan="3">Standard</th>
     <th style="text-align:center;" colspan="3">BCubed</th>
     <th></th>
   </tr>
   <tr>
-    <th style="text-align:left;">Method</th>
+    <th style="text-align:left;">Variant name</th>
     <th style="text-align:center;">rank_th</th>
     <th style="text-align:center;">ents_th</th>
     <th style="text-align:center;">time_std</th>
@@ -245,7 +245,7 @@ The best performance is obtained with the following parameters:
   </tr>
 </table>
 
-#### Cluster merging contribution assessment
+#### Cluster merging assessment analysis
 
 To evaluate the impact the cluster merging process has on the algorithm’s performance, we compare the WAC algorithm variants to those where the cluster merging phase was not performed. Note that we compare only the WAC<sub>MULTI</sub> variant, as it already generates multilingual clusters during the article clustering phase
 
@@ -253,14 +253,14 @@ To evaluate the impact the cluster merging process has on the algorithm’s perf
 <table>
   <tr>
     <th style="text-align:center;" colspan="1"></th>
-    <th style="text-align:center;" colspan="3">Article</th>
-    <th style="text-align:center;" colspan="2">Event</th>
+    <th style="text-align:center;" colspan="3">Article Clustering</th>
+    <th style="text-align:center;" colspan="2">Cluster Merging</th>
     <th style="text-align:center;" colspan="3">Standard</th>
     <th style="text-align:center;" colspan="3">BCubed</th>
     <th></th>
   </tr>
   <tr>
-    <th style="text-align:left;">Method</th>
+    <th style="text-align:left;">Variant name</th>
     <th style="text-align:center;">rank_th</th>
     <th style="text-align:center;">ents_th</th>
     <th style="text-align:center;">time_std</th>
@@ -291,7 +291,7 @@ To evaluate the impact the cluster merging process has on the algorithm’s perf
     <td style="text-align:center;">1074</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>MULTI</sub> (no merge)</td>
+    <td style="text-align:left;">WAC<sub>MULTI/MERGE</sub></td>
     <td style="text-align:center;">0.5</td>
     <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
@@ -322,7 +322,7 @@ To evaluate the impact the cluster merging process has on the algorithm’s perf
     <td style="text-align:center;">1112</td>
   </tr>
   <tr>
-    <td style="text-align:left;">WAC<sub>MULTI</sub> (no merge)</td>
+    <td style="text-align:left;">WAC<sub>MULTI/MERGE</sub></td>
     <td style="text-align:center;">0.6</td>
     <td style="text-align:center;">-</td>
     <td style="text-align:center;">3</td>
