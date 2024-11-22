@@ -1,8 +1,8 @@
 import operator
 from functools import reduce
 
-from src.utils.NewsEventBase import NewsEventBase
-from src.utils.LinearAlgebra import (
+from wac.utils.NewsEventBase import NewsEventBase
+from wac.utils.LinearAlgebra import (
     get_centroid,
     update_centroid,
 )

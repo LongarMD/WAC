@@ -7,16 +7,16 @@ import torch
 import pandas as pd
 from tqdm import tqdm
 
-from src.utils.NewsArticle import NewsArticle
-from src.utils.NewsEvent import NewsEvent
-from src.utils.NewsEventMonitor import NewsEventMonitor
+from wac.utils.NewsArticle import NewsArticle
+from wac.utils.NewsEvent import NewsEvent
+from wac.utils.NewsEventMonitor import NewsEventMonitor
 
 # import conditions
-from src.utils.strategy.ArticleStrategy import ArticleStrategy
+from wac.utils.strategy.ArticleStrategy import ArticleStrategy
 
 # import models
-from src.models.SBERT import SBERT
-from src.models.MNER import MNER
+from wac.models.SBERT import SBERT
+from wac.models.MNER import MNER
 
 # ================================================
 # Data loader functions

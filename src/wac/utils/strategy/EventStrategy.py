@@ -3,10 +3,10 @@ from typing import List
 import torch
 import numpy as np
 
-from src.utils.NewsEvent import NewsEvent
-from src.utils.Wasserstein import Wasserstein
+from wac.utils.NewsEvent import NewsEvent
+from wac.utils.Wasserstein import Wasserstein
 
-from src.utils.LinearAlgebra import cosine_similarity
+from wac.utils.LinearAlgebra import cosine_similarity
 
 # ================================================
 # Constants

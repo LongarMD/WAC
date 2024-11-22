@@ -3,10 +3,10 @@ from typing import List
 import torch
 import numpy as np
 
-from src.utils.NewsEvent import NewsEvent
-from src.utils.NewsArticle import NewsArticle
+from wac.utils.NewsEvent import NewsEvent
+from wac.utils.NewsArticle import NewsArticle
 
-from src.utils.LinearAlgebra import cosine_similarity, avg_overlap
+from wac.utils.LinearAlgebra import cosine_similarity, avg_overlap
 
 # ================================================
 # Constants

@@ -1,6 +1,6 @@
 import torch
 
-from src.utils.LinearAlgebra import (
+from wac.utils.LinearAlgebra import (
     get_min,
     get_max,
     get_avg,

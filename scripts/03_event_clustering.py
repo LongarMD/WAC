@@ -7,15 +7,15 @@ from tqdm import tqdm
 from pathlib import Path
 from argparse import ArgumentParser
 
-from src.utils.NewsArticle import NewsArticle
-from src.utils.NewsEvent import NewsEvent
-from src.utils.NewsEventMonitor import NewsEventMonitor
+from wac.utils.NewsArticle import NewsArticle
+from wac.utils.NewsEvent import NewsEvent
+from wac.utils.NewsEventMonitor import NewsEventMonitor
 
 # import conditions
-from src.utils.strategy.EventStrategy import EventStrategy
+from wac.utils.strategy.EventStrategy import EventStrategy
 
 # import models
-from src.models.SBERT import SBERT
+from wac.models.SBERT import SBERT
 
 # ================================================
 # Data loader functions

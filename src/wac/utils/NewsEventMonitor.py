@@ -1,5 +1,5 @@
-from src.utils.NewsEvent import NewsEvent
-from src.utils.NewsArticle import NewsArticle
+from wac.utils.NewsEvent import NewsEvent
+from wac.utils.NewsArticle import NewsArticle
 
 from typing import List, Union
 
