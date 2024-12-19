@@ -1,7 +1,7 @@
 import re
 import warnings
 import datetime
-from typing import Any, Set, List, Tuple, TypedDict
+from typing import Any, Optional, Set, List, Tuple, TypedDict
 
 import numpy as np
 import torch
@@ -47,7 +47,13 @@ class NewsArticle:
     ner_model: Any = None
 
     # format="%Y-%m-%dT%H:%M:%SZ"
-    def __init__(self, article: Article) -> None:
+    def __init__(
+        self,
+        article: Article,
+        content_embedding: Optional[torch.Tensor] = None,
+        title_embedding: Optional[torch.Tensor] = None,
+        body_embedding: Optional[torch.Tensor] = None,
+    ) -> None:
         self.id = article["id"]
         self.title = format_string(
             article["title"] if isinstance(article["title"], str) else ""
@@ -60,9 +66,9 @@ class NewsArticle:
         self.cluster_id = article.get("cluster_id", None)
 
         # representation placeholders
-        self.__content_embedding = None
-        self.__title_embedding = None
-        self.__body_embedding = None
+        self.__content_embedding = content_embedding
+        self.__title_embedding = title_embedding
+        self.__body_embedding = body_embedding
         self.__named_entities = None
 
     # ==================================
